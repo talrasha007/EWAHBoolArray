@@ -1,0 +1,8 @@
+win/Debug
+win/Release
+win/x64
+
+*.suo
+*.sdf
+*.user
+*.opensdf
