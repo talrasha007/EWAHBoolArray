@@ -325,7 +325,7 @@ bool testEWAHBoolArrayAppend() {
     return isOk;
 }
 
-// unit test contributed by Joerg Bukowski ✆
+// unit test contributed by Joerg Bukowski
 template<class uword>
 bool testJoergBukowski() {
     cout << "[testing JoergBukowski]" << endl;
