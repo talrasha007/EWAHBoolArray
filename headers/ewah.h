@@ -15,6 +15,12 @@
 
 #include "runninglengthword.h"
 
+#if defined(_WIN32) && defined(_MSC_VER)
+#define EWAH_INLINE __forceinline
+#else
+#define EWAH_INLINE __attribute__((always_inline))
+#endif
+
 using namespace std;
 
 template<class uword>
@@ -970,7 +976,7 @@ void EWAHBoolArray<uword>::read(istream & in, const bool savesizeinbits) {
 }
 
 template<class uword>
-size_t EWAHBoolArray<uword>::addLiteralWord(const uword newdata) {
+EWAH_INLINE size_t EWAHBoolArray<uword>::addLiteralWord(const uword newdata) {
     RunningLengthWord<uword> lastRunningLengthWord(buffer[lastRLW]);
     uword numbersofar = lastRunningLengthWord.getNumberOfLiteralWords();
     if (numbersofar >= RunningLengthWord<uword>::largestliteralcount) {//0x7FFF) {
@@ -1244,7 +1250,7 @@ bool EWAHBoolArray<uword>::operator!=(const BoolArray<uword> & x) const {
 }
 
 template<class uword>
-size_t EWAHBoolArray<uword>::addStreamOfEmptyWords(const bool v, size_t number) {
+EWAH_INLINE size_t EWAHBoolArray<uword>::addStreamOfEmptyWords(const bool v, size_t number) {
     if (number == 0)
         return 0;
     sizeinbits += number * wordinbits;
@@ -1300,7 +1306,7 @@ size_t EWAHBoolArray<uword>::addStreamOfEmptyWords(const bool v, size_t number) 
 
 
 template<class uword>
-void EWAHBoolArray<uword>::fastaddStreamOfEmptyWords(const bool v, size_t number) {
+EWAH_INLINE void EWAHBoolArray<uword>::fastaddStreamOfEmptyWords(const bool v, size_t number) {
     if ((RunningLengthWord<uword>::getRunningBit(buffer[lastRLW]) != v)
             && (RunningLengthWord<uword>::size(buffer[lastRLW]) == 0)) {
         RunningLengthWord<uword>::setRunningBit(buffer[lastRLW], v);
@@ -1348,7 +1354,7 @@ void EWAHBoolArray<uword>::fastaddStreamOfEmptyWords(const bool v, size_t number
 
 
 template<class uword>
-size_t EWAHBoolArray<uword>::addStreamOfDirtyWords(const uword * v,
+EWAH_INLINE size_t EWAHBoolArray<uword>::addStreamOfDirtyWords(const uword * v,
         const size_t number) {
     if (number == 0)
         return 0;
@@ -1395,7 +1401,7 @@ size_t EWAHBoolArray<uword>::addStreamOfDirtyWords(const uword * v,
 
 
 template<class uword>
-size_t EWAHBoolArray<uword>::addEmptyWord(const bool v) {
+EWAH_INLINE size_t EWAHBoolArray<uword>::addEmptyWord(const bool v) {
     RunningLengthWord<uword> lastRunningLengthWord(buffer[lastRLW]);
     const bool noliteralword = (lastRunningLengthWord.getNumberOfLiteralWords()
             == 0);
