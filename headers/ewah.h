@@ -1376,9 +1376,7 @@ size_t EWAHBoolArray<uword>::addStreamOfDirtyWords(const uword * v,
                     == NumberOfLiteralWords + whatwecanadd);
     const size_t leftovernumber = number - whatwecanadd;
     // add the dirty words...
-    const size_t oldsize(buffer.size());
-    buffer.resize(oldsize + whatwecanadd);
-    memcpy(&buffer[oldsize], v, whatwecanadd * sizeof(uword));
+	buffer.insert(buffer.end(), v, v + whatwecanadd);
 	sizeinbits += whatwecanadd * wordinbits;
     size_t wordsadded(whatwecanadd);
     if (leftovernumber > 0) {
