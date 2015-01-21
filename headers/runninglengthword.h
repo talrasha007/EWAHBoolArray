@@ -32,14 +32,14 @@ public:
     /**
      * Which bit is being repeated?
      */
-    bool getRunningBit() const {
+    uword getRunningBit() const {
         return mydata & static_cast<uword> (1);
     }
 
     /**
      * how many words should be filled by the running bit
      */
-    static inline bool getRunningBit(uword data)  {
+    static inline uword getRunningBit(uword data)  {
         return data & static_cast<uword> (1);
     }
 
@@ -90,22 +90,20 @@ public:
     /**
      * running length of which type of bits
      */
-    void setRunningBit(bool b) {
-        if (b)
-            mydata |= static_cast<uword> (1);
-        else
-            mydata &= static_cast<uword> (~1);
+    void setRunningBit(uword b) {
+		assert(b == 0 || b == 1);
+		mydata &= static_cast<uword> (~1);
+		mydata |= b;
     }
 
     /**
      * running length of which type of bits
      */
-    static inline void setRunningBit(uword & data, bool b) {
-        if (b)
-            data |= static_cast<uword> (1);
-        else
-            data &= static_cast<uword> (~1);
-    }
+    static inline void setRunningBit(uword & data, uword b) {
+		assert(b == 0 || b == 1);
+		data &= static_cast<uword> (~1);
+		data |= b;
+	}
 
     /**
      * running length of which type of bits
@@ -190,7 +188,7 @@ public:
     /**
      * Which bit is being repeated?
      */
-    bool getRunningBit() const {
+    uword getRunningBit() const {
         return mydata & static_cast<uword> (1);
     }
 
@@ -257,7 +255,7 @@ public:
     /**
      * Which bit is being repeated?
      */
-    bool getRunningBit() const {
+    uword getRunningBit() const {
         return RunningBit;
     }
 
@@ -292,7 +290,7 @@ public:
     uword size() const {
         return static_cast<uword> (RunningLength + NumberOfLiteralWords);
     }
-    bool RunningBit;
+    uword RunningBit;
     uword RunningLength;
     uword NumberOfLiteralWords;
 
